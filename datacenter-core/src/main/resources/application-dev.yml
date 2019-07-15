@@ -1,0 +1,16 @@
+server:
+  port: 8731
+spring:
+  datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://193.168.1.12:3306/datacenter?useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: 123456
+  application:
+        name: datacenter-core
+
+# 配置slq打印日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
