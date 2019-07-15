@@ -1,0 +1,27 @@
+# Mobile Tools for Java (J2ME) Files
+.mtj.tmp/
+
+# virtual machine crash logs Files
+hs_err_pid*
+
+# IDE Files
+.idea/
+.project/
+.settings/
+.classpath/
+*.iml
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Compile Files
+target/
+*.class
+
+# Git submodule Files
+.gitmodules
+
+# nodejs
+node_modules
