@@ -112,6 +112,13 @@
                 <version>2.9.2</version>
             </dependency>
 
+            <!-- oval -->
+            <dependency>
+                <groupId>net.sf.oval</groupId>
+                <artifactId>oval</artifactId>
+                <version>1.84</version>
+            </dependency>
+
             <!-- junit -->
             <dependency>
                 <groupId>junit</groupId>

@@ -1,6 +1,7 @@
 package com.liudao51.datacenter.core.controller;
 
 import com.liudao51.datacenter.core.entity.SysUser;
+import com.liudao51.datacenter.core.protocol.sys_user.ListSysUserReq;
 import com.liudao51.datacenter.core.response.ApiResponse;
 import com.liudao51.datacenter.core.response.ApiResponseBody;
 import com.liudao51.datacenter.core.service.ISysUserService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,11 +28,17 @@ public class SysUserController {
 
     @PostMapping("/list")
     @ApiOperation(value = "用户查询列表")
-    public ApiResponseBody selectList() throws Exception {
-        Map args = new HashMap<String, Object>();
-        args.put("userName", "zhangsan");
-        args.put("realName", "张三丰");
+    public ApiResponseBody selectList(@RequestBody ListSysUserReq req) throws Exception {
 
+        Map args = new HashMap<String, Object>();
+
+        args.clear();
+        args.put("pageNo", req.getPageNo());
+        args.put("pageSize", req.getPageSize());
+        args.put("userName", req.getUserName());
+        args.put("realName", req.getRealName());
+        args.put("adress", req.getMobile());
+        args.put("email", req.getEmail());
         List<SysUser> sysUserList = sysUserService.selectList(args);
 
         return new ApiResponse().success(sysUserList);

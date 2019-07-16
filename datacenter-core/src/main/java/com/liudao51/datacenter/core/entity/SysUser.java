@@ -46,13 +46,13 @@ public class SysUser extends Model<SysUser> {
     /**
      * 手机号码
      */
-    @TableField("mobile_number")
-    private String mobileNumber;
+    @TableField("mobile")
+    private String mobile;
     /**
      * 邮箱地址
      */
-    @TableField("email_address")
-    private String emailAddress;
+    @TableField("email")
+    private String email;
     /**
      * 所属部门id
      */

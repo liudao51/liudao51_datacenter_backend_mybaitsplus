@@ -111,6 +111,12 @@
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
+        <!-- oval -->
+        <dependency>
+            <groupId>net.sf.oval</groupId>
+            <artifactId>oval</artifactId>
+        </dependency>
+
         <!-- datacenter-common -->
         <dependency>
             <groupId>com.liudao51.datacenter</groupId>

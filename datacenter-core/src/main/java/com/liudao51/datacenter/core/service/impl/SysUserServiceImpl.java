@@ -33,11 +33,11 @@ public class SysUserServiceImpl implements ISysUserService {
         if (!StringX.isEmpty(args.get("realName"))) {
             qw.eq("real_name", StringX.getString(args.get("realName"), ""));
         }
-        if (!StringX.isEmpty(args.get("mobileNumber"))) {
-            qw.eq("mobile_number", StringX.getString(args.get("mobileNumber"), ""));
+        if (!StringX.isEmpty(args.get("mobile"))) {
+            qw.eq("mobile", StringX.getString(args.get("mobile"), ""));
         }
-        if (!StringX.isEmpty(args.get("emailAddress"))) {
-            qw.eq("email_address", StringX.getString(args.get("emailAddress"), ""));
+        if (!StringX.isEmpty(args.get("email"))) {
+            qw.eq("email", StringX.getString(args.get("email"), ""));
         }
 
         List<SysUser> sysUserList = sysUserDao.list(qw);
