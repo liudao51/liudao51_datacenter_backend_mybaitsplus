@@ -16,7 +16,7 @@ public class ApiResponseBody extends BaseResponseBody {
         super(data);
     }
 
-    public ApiResponseBody(int code, String message, Object data) {
+    public ApiResponseBody(Integer code, String message, Object data) {
         super(code, message, data);
     }
 }

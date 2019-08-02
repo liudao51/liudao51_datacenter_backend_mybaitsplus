@@ -22,20 +22,18 @@ public class ListSysUserReq implements ParamValidInterface {
     @ApiModelProperty(value = "页数", example = "10", required = true)
     private Integer pageSize;
 
-    @ApiModelProperty(value = "用户名", example = "zhangshan")
+    @ApiModelProperty(value = "用户名", example = "zhangshan", required = false)
     private String userName;
 
-    @ApiModelProperty(value = "真实姓名", example = "张三")
+    @ApiModelProperty(value = "真实姓名", example = "张三", required = false)
     private String realName;
 
     @Digits(message = "手机格式不正确")
     @Length(message = "手机长度不正确")
-    @ApiModelProperty(value = "手机", example = "13700000001")
+    @ApiModelProperty(value = "手机", example = "13700000001", required = false)
     private String mobile;
 
     @Email(message = "邮箱格式不正确")
-    @ApiModelProperty(value = "邮箱", example = "123@qq.com")
+    @ApiModelProperty(value = "邮箱", example = "123@qq.com", required = false)
     private String email;
-
-
 }

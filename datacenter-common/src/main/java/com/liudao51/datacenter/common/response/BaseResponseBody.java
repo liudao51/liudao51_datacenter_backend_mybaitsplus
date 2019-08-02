@@ -1,17 +1,18 @@
 package com.liudao51.datacenter.common.response;
 
 import com.liudao51.datacenter.common.constant.ErrorCode;
+import com.liudao51.datacenter.common.util.StringX;
 import lombok.Data;
 
 @Data
 public abstract class BaseResponseBody {
 
     // 状态码
-    protected int code;
+    protected Integer code;
     // 消息内容
     protected String message;
     // 时间戮
-    protected long timestamp;
+    protected Long timestamp;
     // 数据内容
     protected Object data;
 
@@ -31,7 +32,13 @@ public abstract class BaseResponseBody {
         this.data = data;
     }
 
-    public BaseResponseBody(int code, String message, Object data) {
+    public BaseResponseBody(Integer code, String message, Object data) {
+        if (StringX.isEmpty(code)) {
+            code = ErrorCode.UNDEFINED.toCode();
+        }
+        if (StringX.isEmpty(message)) {
+            message = ErrorCode.UNDEFINED.toValue();
+        }
         this.code = code;
         this.message = message;
         this.timestamp = System.currentTimeMillis();

@@ -8,6 +8,8 @@ public enum ErrorCode {
     /*
      * 格式为："功能_具体错误_ERROR", 如：REQUEST_SIGN_ERROR, USER_NOT_AUTHORIZE_ERROR
      *
+     * 长度为：大于5位整数。
+     * -1 - 未定义,
      * 0 - 成功,
      * 1xxxx - 系统相关,
      * 20xxx - 请求相关,
@@ -31,10 +33,9 @@ public enum ErrorCode {
 
     STREAM_FILE_FORMAT_ERROR(23001, "文件格式错误"),
 
-    SUCCESS(0, "success");
+    UNDEFINED(-1, "未定义"), SUCCESS(0, "success");
 
-
-    private final int code;
+    private final Integer code;
     private final String value;
 
     ErrorCode(int code, String value) {
@@ -46,7 +47,7 @@ public enum ErrorCode {
         return this.value;
     }
 
-    public int toCode() {
+    public Integer toCode() {
         return this.code;
     }
 }

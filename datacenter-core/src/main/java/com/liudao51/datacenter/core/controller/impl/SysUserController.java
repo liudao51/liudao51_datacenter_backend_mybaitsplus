@@ -1,5 +1,7 @@
-package com.liudao51.datacenter.core.controller;
+package com.liudao51.datacenter.core.controller.impl;
 
+import com.liudao51.datacenter.common.annotation.ReqValidAnnotation;
+import com.liudao51.datacenter.core.controller.ISysUserController;
 import com.liudao51.datacenter.core.entity.SysUser;
 import com.liudao51.datacenter.core.protocol.sys_user.ListSysUserReq;
 import com.liudao51.datacenter.core.response.ApiResponse;
@@ -10,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +23,14 @@ import java.util.Map;
 @Api(value = "系统用户相关", tags = {"系统用户相关接口"})
 @RestController
 @RequestMapping("/sys_user")
-public class SysUserController {
+public class SysUserController extends BaseController implements ISysUserController {
     @Autowired
     private ISysUserService sysUserService;
 
     @PostMapping("/list")
     @ApiOperation(value = "用户查询列表")
-    public ApiResponseBody selectList(@RequestBody ListSysUserReq req) throws Exception {
+    @ReqValidAnnotation
+    public ApiResponseBody selectList(ListSysUserReq req) throws Exception {
 
         Map args = new HashMap<String, Object>();
 

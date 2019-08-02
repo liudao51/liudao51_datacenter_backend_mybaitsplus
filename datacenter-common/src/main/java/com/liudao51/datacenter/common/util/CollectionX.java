@@ -1,7 +1,10 @@
 package com.liudao51.datacenter.common.util;
 
+import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,5 +44,17 @@ public class CollectionX {
 
         // container包含array之后,containerSet大小是否有所增大
         return (containerSet.size() == containerSize);
+    }
+
+    /**
+     * TODO: 把map转换为JSONObject
+     *
+     * @param map
+     * @return
+     */
+    public static JSONObject mapToJson(Map map) {
+        JSONObject jsonObj = new JSONObject(map);
+
+        return jsonObj;
     }
 }
