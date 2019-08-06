@@ -1,5 +1,7 @@
 package com.liudao51.datacenter.core.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liudao51.datacenter.core.entity.SysUser;
 
 import java.util.List;
@@ -12,4 +14,6 @@ import java.util.Map;
  */
 public interface ISysUserService {
     List<SysUser> selectList(Map args);
+
+    IPage<SysUser> selectPage(Map args);
 }

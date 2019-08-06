@@ -1,6 +1,7 @@
 package com.liudao51.datacenter.core.controller.impl;
 
-import com.liudao51.datacenter.common.annotation.ReqValidAnnotation;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.liudao51.datacenter.common.annotation.RequestParamValid;
 import com.liudao51.datacenter.core.controller.ISysUserController;
 import com.liudao51.datacenter.core.entity.SysUser;
 import com.liudao51.datacenter.core.protocol.sys_user.ListSysUserReq;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -29,20 +29,17 @@ public class SysUserController extends BaseController implements ISysUserControl
 
     @PostMapping("/list")
     @ApiOperation(value = "用户查询列表")
-    @ReqValidAnnotation
+    @RequestParamValid
     public ApiResponseBody selectList(ListSysUserReq req) throws Exception {
-
         Map args = new HashMap<String, Object>();
-
-        args.clear();
         args.put("pageNo", req.getPageNo());
         args.put("pageSize", req.getPageSize());
         args.put("userName", req.getUserName());
         args.put("realName", req.getRealName());
         args.put("adress", req.getMobile());
         args.put("email", req.getEmail());
-        List<SysUser> sysUserList = sysUserService.selectList(args);
+        IPage<SysUser> sysUserListPage = sysUserService.selectPage(args);
 
-        return new ApiResponse().success(sysUserList);
+        return new ApiResponse().success(sysUserListPage);
     }
 }

@@ -26,7 +26,7 @@ public class ApiResponse {
     /*
      * 失败返回对象：记录可预知异常到日志文件A
      */
-    public ApiResponseBody fail(int code, String message) {
+    public ApiResponseBody fail(String message, int code) {
         //不记录请求URL
         log.warn("普通异常：ERROR_CODE={}, ERROR_MESSAGE={}", code, message);
 

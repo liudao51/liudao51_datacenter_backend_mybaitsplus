@@ -1,4 +1,4 @@
-package com.liudao51.datacenter.core.aop;
+package com.liudao51.datacenter.core.aop.exception;
 
 import com.liudao51.datacenter.core.exception.AppException;
 import com.liudao51.datacenter.core.exception.SystemException;
@@ -20,7 +20,7 @@ import java.net.URLDecoder;
  */
 @RestControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandlerAop {
     /**
      * 自定义异常
      *
@@ -52,33 +52,5 @@ public class GlobalExceptionHandler {
         ex2.setParams(request.getParameterMap());
 
         return new ApiResponse().fail(ex2);
-    }
-
-    public String receivePost(HttpServletRequest request) throws IOException, UnsupportedEncodingException {
-
-        // 读取请求内容
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        String line = null;
-        StringBuilder sb = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-
-        // 将资料解码
-        String reqBody = sb.toString();
-        return URLDecoder.decode(reqBody, "UTF-8");
-    }
-
-    private static String getPostData(HttpServletRequest request) {
-        StringBuffer data = new StringBuffer();
-        String line = null;
-        BufferedReader reader = null;
-        try {
-            reader = request.getReader();
-            while (null != (line = reader.readLine()))
-                data.append(line);
-        } catch (IOException e) {
-        }
-        return data.toString();
     }
 }
