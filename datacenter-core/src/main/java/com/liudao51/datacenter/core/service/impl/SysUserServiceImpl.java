@@ -3,10 +3,13 @@ package com.liudao51.datacenter.core.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liudao51.datacenter.common.constant.RequestConstant;
+import com.liudao51.datacenter.common.page.Pager;
 import com.liudao51.datacenter.common.util.StringX;
 import com.liudao51.datacenter.core.dao.ISysUserDao;
 import com.liudao51.datacenter.core.entity.SysUser;
 import com.liudao51.datacenter.core.service.ISysUserService;
+import com.liudao51.datacenter.core.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +45,12 @@ public class SysUserServiceImpl implements ISysUserService {
             qw.eq("email", StringX.getString(args.get("email"), ""));
         }
 
-        List<SysUser> sysUserList = sysUserDao.list(qw);
-
-        return sysUserList;
+        return sysUserDao.list(qw);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public IPage<SysUser> selectPage(Map args) {
+    public Pager<SysUser> selectPage(Map args) {
 
         QueryWrapper<SysUser> qw = new QueryWrapper<>();
 
@@ -66,13 +67,10 @@ public class SysUserServiceImpl implements ISysUserService {
             qw.eq("email", StringX.getString(args.get("email"), ""));
         }
 
-        Integer pageNo = Integer.valueOf(StringX.getString(args.get("pageNo"), "1"));
-        Integer pageSize = Integer.valueOf(StringX.getString(args.get("pageSize"), "10"));
+        Long pageNo = Long.valueOf(StringX.getString(args.get("pageNo"), RequestConstant.PAGE.PAGE_NO.toString()));
+        Long pageSize = Long.valueOf(StringX.getString(args.get("pageSize"), RequestConstant.PAGE.PAGE_SIZE.toString()));
         IPage<SysUser> page = new Page(pageNo, pageSize);
 
-        IPage<SysUser> sysUserListPage = sysUserDao.page(page, qw);
-
-        return sysUserListPage;
+        return PageUtil.mybatisPageToPager(sysUserDao.page(page, qw));
     }
-
 }

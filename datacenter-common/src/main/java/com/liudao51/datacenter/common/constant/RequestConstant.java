@@ -46,4 +46,12 @@ public class RequestConstant {
         public final static String SUCCESS = "success"; //成功
         public final static String FAIL = "fail"; //失败
     }
+
+    /**
+     * TODO: 分页信息
+     */
+    public final static class PAGE {
+        public final static Long PAGE_NO = 1L; //默认当前页
+        public final static Long PAGE_SIZE = 10L; //默认页码大小
+    }
 }

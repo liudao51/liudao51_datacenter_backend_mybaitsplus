@@ -3,14 +3,12 @@ package com.liudao51.datacenter.core.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户实体
@@ -64,10 +62,10 @@ public class SysUser extends Model<SysUser> {
     @TableField("department_name")
     private String departmentName;
     /**
-     * 用户状态（0：可用；1：不可用）
+     * 用户状态（0-正常,1-删除,2-停用）
      */
-    @TableField("user_status")
-    private Integer userStatus;
+    @TableField("status")
+    private Integer status;
     /**
      * 备注
      */
@@ -81,7 +79,7 @@ public class SysUser extends Model<SysUser> {
      * 创建时间
      */
     @TableField("created_time")
-    private Date createdTime;
+    private Long createdTime;
     /**
      * 最后修改人
      */
@@ -91,7 +89,7 @@ public class SysUser extends Model<SysUser> {
      * 最后修改时间
      */
     @TableField("last_modified_time")
-    private Date lastModifiedTime;
+    private Long lastModifiedTime;
 
     @Override
     protected Serializable pkVal() {
