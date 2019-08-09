@@ -1,0 +1,26 @@
+package ${package.DaoImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Dao}.${table.DaoName};
+import ${superDaoImplClassPackage};
+import org.springframework.stereotype.Repository;
+
+/**
+ * <p>
+ * 数据访问实现类: ${table.daoImplName}
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Repository
+#if(${kotlin})
+open class ${table.daoImplName} : ${superDaoImplClass}<${table.mapperName}, ${entity}>(), ${table.daoName} {
+
+}
+#else
+public class ${table.daoImplName} extends ${superDaoImplClass}<${table.mapperName}, ${entity}> implements ${table.daoName} {
+
+}
+#end

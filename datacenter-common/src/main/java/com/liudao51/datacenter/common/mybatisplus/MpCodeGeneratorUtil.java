@@ -1,4 +1,4 @@
-package com.liudao51.datacenter.core.util;
+package com.liudao51.datacenter.common.mybatisplus;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -42,7 +42,7 @@ public class MpCodeGeneratorUtil {
 
         //TODO: 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(canonicalPath + "/datacenter-core/src/main/java");
+        gc.setOutputDir(canonicalPath + "/datacenter-common/src/main/java");
         gc.setFileOverride(true);
         gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
@@ -72,7 +72,7 @@ public class MpCodeGeneratorUtil {
 
         //TODO: 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.liudao51.datacenter.core");
+        pc.setParent("com.liudao51.datacenter.common");
         pc.setController("controller");
         pc.setControllerImpl("controller.impl");
         pc.setService("service");
@@ -87,13 +87,13 @@ public class MpCodeGeneratorUtil {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setSuperMapperClass("com.liudao51.datacenter.core.mapper.IBaseMapper");
-        strategy.setSuperDaoClass("com.liudao51.datacenter.core.dao.IBaseDao");
-        strategy.setSuperDaoImplClass("com.liudao51.datacenter.core.dao.impl.BaseDaoImpl");
-        strategy.setSuperServiceClass("com.liudao51.datacenter.core.service.IBaseService");
-        strategy.setSuperServiceImplClass("com.liudao51.datacenter.core.service.impl.BaseServiceImpl");
-        strategy.setSuperControllerClass("com.liudao51.datacenter.core.controller.IBaseController");
-        strategy.setSuperControllerImplClass("com.liudao51.datacenter.core.controller.impl.BaseControllerImpl");
+        strategy.setSuperMapperClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.IBaseMapper");
+        strategy.setSuperDaoClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.IBaseDao");
+        strategy.setSuperDaoImplClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.impl.BaseDaoImpl");
+        strategy.setSuperServiceClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.IBaseService");
+        strategy.setSuperServiceImplClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.impl.BaseServiceImpl");
+        strategy.setSuperControllerClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.IBaseController");
+        strategy.setSuperControllerImplClass("com.liudao51.datacenter.common.mybatisplus.generator.strategy.impl.BaseControllerImpl");
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         strategy.setTablePrefix(new String[]{""});   // 此处可以修改为：表前缀(如:dc_)
         strategy.setInclude(new String[]{"TABLES"}); // 此处可以修改为：需要生成的表(如:dc_user)
@@ -128,10 +128,10 @@ public class MpCodeGeneratorUtil {
         //自定义文件输出位置（非必须）
         List<FileOutConfig> fileOutList = new ArrayList<>();
         //设置生成resources/mapper/*Mapper.xml文件
-        fileOutList.add(new FileOutConfig("/mp_code_generator_templates/mapper.xml.vm") {
+        fileOutList.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return canonicalPath + "/datacenter-core/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+                return canonicalPath + "/datacenter-common/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
         cfg.setFileOutConfigList(fileOutList);

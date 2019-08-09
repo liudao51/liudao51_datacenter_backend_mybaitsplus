@@ -22,7 +22,7 @@ import java.util.Map;
  * </p>
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserService {
 
     @Autowired
     private ISysUserDao sysUserDao;

@@ -13,7 +13,7 @@ import java.util.Map;
  * 用户 服务类
  * </p>
  */
-public interface ISysUserService {
+public interface ISysUserService extends IBaseService {
     List<SysUser> selectList(Map args);
 
     Pager<SysUser> selectPage(Map args);

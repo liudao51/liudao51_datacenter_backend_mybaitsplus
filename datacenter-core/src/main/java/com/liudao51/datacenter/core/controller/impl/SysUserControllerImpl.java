@@ -1,6 +1,5 @@
 package com.liudao51.datacenter.core.controller.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.liudao51.datacenter.common.annotation.RequestParamValid;
 import com.liudao51.datacenter.common.page.Pager;
 import com.liudao51.datacenter.core.controller.ISysUserController;
@@ -24,7 +23,7 @@ import java.util.Map;
 @Api(value = "系统用户相关", tags = {"系统用户相关接口"})
 @RestController
 @RequestMapping("/sys_user")
-public class SysUserController extends BaseController implements ISysUserController {
+public class SysUserControllerImpl extends BaseControllerImpl implements ISysUserController {
     @Autowired
     private ISysUserService sysUserService;
 
