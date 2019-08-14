@@ -1,11 +1,10 @@
 package com.liudao51.datacenter.core.service.impl;
 
-import com.liudao51.datacenter.core.service.IBaseService;
-
 /**
- * class:
+ * class: 服务实现基类
  * <p>
  * Created by jewel on 2019/8/9.
  */
-public class BaseServiceImpl implements IBaseService {
+public abstract class BaseServiceImpl {
+
 }

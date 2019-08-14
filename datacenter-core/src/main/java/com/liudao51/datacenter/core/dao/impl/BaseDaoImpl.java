@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * <p>
  * Created by jewel on 2019/7/15.
  */
-public class BaseDaoImpl<M extends IBaseMapper<T>, T> extends ServiceImpl<M, T> implements IBaseDao<T> {
+public class BaseDaoImpl<M extends IBaseMapper<T>, T> extends ServiceImpl<M, T>{
     // add new method...
 }

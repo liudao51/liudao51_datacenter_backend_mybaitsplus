@@ -4,7 +4,7 @@ import com.liudao51.datacenter.common.response.BaseResponseBody;
 import lombok.Data;
 
 @Data
-public class ApiResponseBody extends BaseResponseBody {
+public class ApiResponseBody<T> extends BaseResponseBody {
 
     // 默认返回处理成功(不带数据data)
     public ApiResponseBody() {
@@ -12,7 +12,7 @@ public class ApiResponseBody extends BaseResponseBody {
     }
 
     // 默认返回处理成功(带数据data)
-    public ApiResponseBody(Object data) {
+    public ApiResponseBody(T data) {
         super(data);
     }
 

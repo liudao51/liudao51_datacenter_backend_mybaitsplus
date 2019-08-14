@@ -1,7 +1,6 @@
 package com.liudao51.datacenter.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liudao51.datacenter.common.page.Pager;
 import com.liudao51.datacenter.common.util.StringX;
@@ -26,11 +25,11 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     @Autowired
     private ISysUserDao sysUserDao;
 
-    @Override
-    public List<SysUser> selectList(Map args) {
-
-        QueryWrapper<SysUser> qw = new QueryWrapper<>();
-
+    /**
+     * 把Map参数转换为QueryWrapper
+     */
+    private QueryWrapper<SysUser> getWrapper(Map args) {
+        QueryWrapper<SysUser> qw = new QueryWrapper<SysUser>();
         if (!StringX.isEmpty(args.get("userName"))) {
             qw.eq("user_name", StringX.getString(args.get("userName"), ""));
         }
@@ -43,30 +42,38 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
         if (!StringX.isEmpty(args.get("email"))) {
             qw.eq("email", StringX.getString(args.get("email"), ""));
         }
+
+        return qw;
+    }
+
+    public boolean add(SysUser sysUser) {
+        return sysUserDao.save(sysUser);
+    }
+
+    public boolean update(SysUser sysUser) {
+        return sysUserDao.updateById(sysUser);
+    }
+
+    public boolean delete(SysUser sysUser) {
+        return sysUserDao.removeById(sysUser);
+    }
+
+    public SysUser selectOne(Map args) {
+        QueryWrapper<SysUser> qw = this.getWrapper(args);
+
+        return sysUserDao.getOne(qw);
+    }
+
+    public List<SysUser> selectList(Map args) {
+        QueryWrapper<SysUser> qw = this.getWrapper(args);
 
         return sysUserDao.list(qw);
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public Pager<SysUser> selectPage(Map args) {
-
-        QueryWrapper<SysUser> qw = new QueryWrapper<>();
-
-        if (!StringX.isEmpty(args.get("userName"))) {
-            qw.eq("user_name", StringX.getString(args.get("userName"), ""));
-        }
-        if (!StringX.isEmpty(args.get("realName"))) {
-            qw.eq("real_name", StringX.getString(args.get("realName"), ""));
-        }
-        if (!StringX.isEmpty(args.get("mobile"))) {
-            qw.eq("mobile", StringX.getString(args.get("mobile"), ""));
-        }
-        if (!StringX.isEmpty(args.get("email"))) {
-            qw.eq("email", StringX.getString(args.get("email"), ""));
-        }
-
-        IPage<SysUser> page = new Page(PageUtil.getPageNo(args.get("pageNo")), PageUtil.getPageNo(args.get("pageSize")));
+        QueryWrapper<SysUser> qw = this.getWrapper(args);
+        Page page = new Page<SysUser>(PageUtil.getPageNo(args.get("pageNo")), PageUtil.getPageNo(args.get("pageSize")));
 
         return PageUtil.mybatisPageToPager(sysUserDao.page(page, qw));
     }

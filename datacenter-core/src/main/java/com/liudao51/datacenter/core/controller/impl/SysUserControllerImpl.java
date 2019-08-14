@@ -30,7 +30,8 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
     @PostMapping("/list")
     @ApiOperation(value = "用户查询列表")
     @RequestParamValid
-    public ApiResponseBody selectList(ListSysUserReq req) throws Exception {
+    @SuppressWarnings("unchecked")
+    public ApiResponseBody<Pager<SysUser>> selectList(ListSysUserReq req) throws Exception {
         Map args = new HashMap<String, Object>();
         args.put("pageNo", req.getPageNo());
         args.put("pageSize", req.getPageSize());
@@ -40,6 +41,6 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         args.put("email", req.getEmail());
         Pager<SysUser> sysUserListPage = sysUserService.selectPage(args);
 
-        return new ApiResponse().success(sysUserListPage);
+        return new ApiResponse<Pager<SysUser>>().success(sysUserListPage);
     }
 }

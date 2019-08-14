@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * Created by jewel on 2019/8/5.
  */
-public abstract class BaseControllerImpl implements IBaseController {
+public abstract class BaseControllerImpl{
     /**
      * 得到request对象
      *

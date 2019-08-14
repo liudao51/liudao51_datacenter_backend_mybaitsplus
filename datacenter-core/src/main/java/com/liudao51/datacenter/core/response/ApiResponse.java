@@ -11,16 +11,16 @@ import lombok.extern.slf4j.Slf4j;
  * Api接口返回对象
  */
 @Slf4j
-public class ApiResponse {
+public class ApiResponse<T> {
     /**
      * 成功返回对象
      */
     public ApiResponseBody success() {
-        return new ApiResponseBody();
+        return new ApiResponseBody<T>();
     }
 
-    public ApiResponseBody success(Object data) {
-        return new ApiResponseBody(data);
+    public ApiResponseBody success(T data) {
+        return new ApiResponseBody<>(data);
     }
 
     /*
@@ -30,7 +30,7 @@ public class ApiResponse {
         //不记录请求URL
         log.warn("普通异常：ERROR_CODE={}, ERROR_MESSAGE={}", code, message);
 
-        return new ApiResponseBody(code, message, null);
+        return new ApiResponseBody<T>(code, message, null);
     }
 
     public ApiResponseBody fail(AppException ex) {
@@ -41,7 +41,7 @@ public class ApiResponse {
             log.warn("ERROR_INFO:", ex);
         }
 
-        return new ApiResponseBody(ex.getCode(), ex.getMessage(), null);
+        return new ApiResponseBody<T>(ex.getCode(), ex.getMessage(), null);
     }
 
     /*
@@ -54,7 +54,7 @@ public class ApiResponse {
             log.error("ERROR_INFO:", ex);
         }
 
-        return new ApiResponseBody(ErrorCode.SYSTEM_UNKNOWN_ERROR.toCode(), ErrorCode.SYSTEM_UNKNOWN_ERROR.toValue(), null);
+        return new ApiResponseBody<T>(ErrorCode.SYSTEM_UNKNOWN_ERROR.toCode(), ErrorCode.SYSTEM_UNKNOWN_ERROR.toValue(), null);
     }
 
     public ApiResponseBody fail(SystemException ex) {
@@ -65,6 +65,6 @@ public class ApiResponse {
             log.error("ERROR_INFO:", ex);
         }
 
-        return new ApiResponseBody(ErrorCode.SYSTEM_UNKNOWN_ERROR.toCode(), ErrorCode.SYSTEM_UNKNOWN_ERROR.toValue(), null);
+        return new ApiResponseBody<T>(ErrorCode.SYSTEM_UNKNOWN_ERROR.toCode(), ErrorCode.SYSTEM_UNKNOWN_ERROR.toValue(), null);
     }
 }

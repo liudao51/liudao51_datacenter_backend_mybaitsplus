@@ -29,11 +29,11 @@ public class ListSysUserReq implements ParamValidInterface {
     private String realName;
 
     @Digits(message = "手机格式不正确")
-    @Length(message = "手机长度不正确")
+    @Length(min = 10, max = 13, message = "手机长度不正确")
     @ApiModelProperty(value = "手机", example = "13700000001", required = false)
     private String mobile;
 
     @Email(message = "邮箱格式不正确")
-    @ApiModelProperty(value = "邮箱", example = "123@qq.com", required = false)
+    @ApiModelProperty(value = "邮箱", example = "zhangshan@qq.com", required = false)
     private String email;
 }

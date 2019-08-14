@@ -5,7 +5,7 @@ import com.liudao51.datacenter.common.util.StringX;
 import lombok.Data;
 
 @Data
-public abstract class BaseResponseBody {
+public abstract class BaseResponseBody<T> {
 
     // 状态码
     protected Integer code;
@@ -14,7 +14,7 @@ public abstract class BaseResponseBody {
     // 时间戮
     protected Long timestamp;
     // 数据内容
-    protected Object data;
+    protected T data;
 
     // 默认返回处理成功(不带数据data)
     public BaseResponseBody() {
@@ -25,14 +25,14 @@ public abstract class BaseResponseBody {
     }
 
     // 默认返回处理成功(带数据data)
-    public BaseResponseBody(Object data) {
+    public BaseResponseBody(T data) {
         this.code = ErrorCode.SUCCESS.toCode();
         this.message = ErrorCode.SUCCESS.toValue();
         this.timestamp = System.currentTimeMillis();
         this.data = data;
     }
 
-    public BaseResponseBody(Integer code, String message, Object data) {
+    public BaseResponseBody(Integer code, String message, T data) {
         if (StringX.isEmpty(code)) {
             code = ErrorCode.UNDEFINED.toCode();
         }
