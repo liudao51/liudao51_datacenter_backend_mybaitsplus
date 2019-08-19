@@ -30,6 +30,14 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
      */
     private QueryWrapper<SysUser> getWrapper(Map args) {
         QueryWrapper<SysUser> qw = new QueryWrapper<SysUser>();
+        //删除标识
+        if (!StringX.isEmpty(args.get("deleted"))) {
+            qw.eq("deleted", StringX.getString(args.get("deleted"), ""));
+        } else {
+            qw.eq("deleted", 0);
+        }
+
+        //其他查询条件
         if (!StringX.isEmpty(args.get("userName"))) {
             qw.eq("user_name", StringX.getString(args.get("userName"), ""));
         }
@@ -41,6 +49,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
         }
         if (!StringX.isEmpty(args.get("email"))) {
             qw.eq("email", StringX.getString(args.get("email"), ""));
+        }
+        if (!StringX.isEmpty(args.get("status"))) {
+            qw.eq("status", StringX.getString(args.get("status"), ""));
         }
 
         return qw;

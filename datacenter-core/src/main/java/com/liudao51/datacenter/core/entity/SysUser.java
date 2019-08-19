@@ -65,7 +65,7 @@ public class SysUser extends Model<SysUser> {
     /**
      * 所属部门id
      */
-    @ApiModelProperty(value = "所属部门id", example = "1", required = true)
+    @ApiModelProperty(value = "所属部门id", example = "100", required = true)
     @TableField("department_id")
     private Long departmentId;
     /**
@@ -75,9 +75,9 @@ public class SysUser extends Model<SysUser> {
     @TableField("department_name")
     private String departmentName;
     /**
-     * 用户状态（0-正常,1-删除,2-停用）
+     * 用户状态（0-正常,1-未激活,2-禁用,3-冻结）
      */
-    @ApiModelProperty(value = "用户状态（0-正常,1-删除,2-停用）", example = "0", required = true)
+    @ApiModelProperty(value = "用户状态（0-正常,1-未激活,2-禁用,3-冻结）", example = "0", required = true)
     @TableField("status")
     private Integer status;
     /**
@@ -89,7 +89,7 @@ public class SysUser extends Model<SysUser> {
     /**
      * 最后登录时间
      */
-    @ApiModelProperty(value = "最后登录时间", example = "1", required = true)
+    @ApiModelProperty(value = "最后登录时间", example = "1565761054895", required = true)
     @TableField("last_login_time")
     private Long lastLoginTime;
     /**
@@ -113,15 +113,33 @@ public class SysUser extends Model<SysUser> {
     /**
      * 最后修改人
      */
-    @ApiModelProperty(value = "最后修改人", example = "1", required = true)
-    @TableField("last_modified_by")
-    private String lastModifiedBy;
+    @ApiModelProperty(value = "最后修改人", example = "admin", required = true)
+    @TableField("updated_by")
+    private String updatedBy;
     /**
      * 最后修改时间
      */
     @ApiModelProperty(value = "最后修改时间", example = "1565761054895", required = true)
-    @TableField("last_modified_time")
-    private Long lastModifiedTime;
+    @TableField("updated_time")
+    private Long updatedTime;
+    /**
+     * 删除标识（0-未删除,1-已删除）
+     */
+    @ApiModelProperty(value = "删除标识（0-未删除,1-已删除）", example = "0", required = true)
+    @TableField("deleted")
+    private Integer deleted;
+    /**
+     * 删除人
+     */
+    @ApiModelProperty(value = "删除人", example = "admin", required = true)
+    @TableField("deleted_by")
+    private String deletedBy;
+    /**
+     * 删除时间
+     */
+    @ApiModelProperty(value = "删除时间", example = "1565761054895", required = true)
+    @TableField("deleted_time")
+    private Long deletedTime;
 
     @Override
     protected Serializable pkVal() {

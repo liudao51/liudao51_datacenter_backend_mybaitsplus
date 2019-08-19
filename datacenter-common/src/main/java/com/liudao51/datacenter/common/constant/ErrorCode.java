@@ -16,7 +16,7 @@ public enum ErrorCode {
      * 21xxx - 用户相关,
      * 22xxx - 订单相关,
      */
-    SYSTEM_UNKNOWN_ERROR(10001, "系统异常"),
+    SYSTEM_UNKNOWN_ERROR(10001, "系统繁忙"),
     SYSTEM_TIMEOUT_ERROR(10002, "系统超时"),
 
     REQUEST_SIGN_ERROR(20001, "签名错误"),
@@ -34,6 +34,12 @@ public enum ErrorCode {
     USER_PASSWORD_ERROR(21006, "密码错误"),
     USER_NAME_FORMAT_ERROR(21007, "用户名格式错误"),
     USER_PASSWORD_FORMAT_ERROR(21008, "密码格式错误"),
+    USER_UNACTIVATED_ERROR(21009, "用户未激活"),
+    USER_FORBIDDEN_ERROR(21010, "用户已禁用"),
+    USER_FREEZE_ERROR(21011, "用户已冻结"),
+    USER_ADD_ERROR(21012, "用户新增失败"),
+    USER_UPDATE_ERROR(21013, "用户更新失败"),
+    USER_DELETE_ERROR(21014, "用户删除失败"),
 
     ORDER_ORDER_SN_ERROR(22001, "订单号错误"),
     ORDER_REPEAT_PAY_ERROR(22002, "订单重复支付"),

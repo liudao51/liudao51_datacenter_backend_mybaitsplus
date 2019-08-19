@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @Data
 @Component
-public class UserRealm extends AuthorizingRealm {
+public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private ISysUserService sysUserService;
 
@@ -57,6 +57,12 @@ public class UserRealm extends AuthorizingRealm {
         //判断用户名
         if (null == user) {
             throw new AppException(ErrorCode.USER_NOT_EXITS_ERROR.toValue(), ErrorCode.USER_NOT_EXITS_ERROR.toCode());
+        } else if (1 == user.getStatus()) {
+            throw new AppException(ErrorCode.USER_UNACTIVATED_ERROR.toValue(), ErrorCode.USER_UNACTIVATED_ERROR.toCode());
+        } else if (2 == user.getStatus()) {
+            throw new AppException(ErrorCode.USER_FORBIDDEN_ERROR.toValue(), ErrorCode.USER_FORBIDDEN_ERROR.toCode());
+        } else if (3 == user.getStatus()) {
+            throw new AppException(ErrorCode.USER_FREEZE_ERROR.toValue(), ErrorCode.USER_FREEZE_ERROR.toCode());
         }
 
         //判断密码
@@ -65,7 +71,12 @@ public class UserRealm extends AuthorizingRealm {
             throw new AppException(ErrorCode.USER_PASSWORD_ERROR.toValue(), ErrorCode.USER_PASSWORD_ERROR.toCode());
         }*/
         //方式2.使用shiro函数判断密码是否正确
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), ByteSource.Util.bytes(user.getUserName()), this.getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
+                user, //用户对象（当使用redis作为缓存时,这里必须为user对象；对使用ehcache作为缓存时,这里可以为userName,也可以为user对象）
+                user.getPassword(), //密码
+                ByteSource.Util.bytes(user.getUserName()), //salt盐值
+                this.getName() //realam名字
+        );
 
         return info;
     }

@@ -4,6 +4,7 @@ import com.liudao51.datacenter.common.annotation.RequestParamValid;
 import com.liudao51.datacenter.common.constant.ErrorCode;
 import com.liudao51.datacenter.core.controller.IAccountController;
 import com.liudao51.datacenter.core.entity.SysUser;
+import com.liudao51.datacenter.core.exception.AppException;
 import com.liudao51.datacenter.core.protocol.account.LoginReq;
 import com.liudao51.datacenter.core.response.ApiResponse;
 import com.liudao51.datacenter.core.response.ApiResponseBody;
@@ -40,7 +41,9 @@ public class AccountControllerImpl extends BaseControllerImpl implements IAccoun
         UsernamePasswordToken token = new UsernamePasswordToken(req.getUserName(), req.getPassword());
         try {
             subject.login(token);
-        } catch (Exception e) {
+        } catch (AppException ae) { //自定义检测规则异常
+            return new ApiResponse().fail(ae.getMessage(), ae.getCode());
+        } catch (Exception e) { // shiro检测异常
             return new ApiResponse().fail(ErrorCode.USER_USERNAME_PASSWORD_ERROR.toValue(), ErrorCode.USER_USERNAME_PASSWORD_ERROR.toCode());
         }
 
@@ -66,7 +69,11 @@ public class AccountControllerImpl extends BaseControllerImpl implements IAccoun
     @ApiOperation(value = "用户登出")
     @GetMapping("/logout")
     public ApiResponseBody logout() {
-        SecurityUtils.getSubject().logout();
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout();
+        }
+
         return new ApiResponse().success();
     }
 

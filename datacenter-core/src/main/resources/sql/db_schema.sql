@@ -10,7 +10,7 @@ CREATE TABLE `dc_sys_user` (
    `email` varchar(64) DEFAULT NULL COMMENT '邮箱地址',
    `department_id` bigint(20) DEFAULT NULL COMMENT '所属部门id',
    `department_name` varchar(64) DEFAULT NULL COMMENT '所属部门名称',
-   `status` tinyint(4) DEFAULT '0' COMMENT '用户状态（0-正常,1-删除,2-停用）',
+   `status` tinyint(4) DEFAULT '0' COMMENT '用户状态（0-正常,1-删除,2-未激活,3-禁用,4-冻结）',
    `remark` varchar(500) DEFAULT NULL COMMENT '备注',
    `last_login_time` bigint(20) DEFAULT NULL COMMENT '最后登录时间',
    `last_login_ip` varchar(30) DEFAULT NULL COMMENT '最后登录IP',
