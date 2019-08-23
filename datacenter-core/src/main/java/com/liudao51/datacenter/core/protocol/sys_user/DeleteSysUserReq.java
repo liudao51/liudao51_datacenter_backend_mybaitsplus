@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import net.sf.oval.constraint.*;
 
+@ApiModel(value = "DeleteSysUserReq")
 @Data
-@ApiModel(value = "用户删除")
-public class DeleteReq implements ParamValidInterface {
+public class DeleteSysUserReq implements ParamValidInterface {
 
     @NotNull(message = "用户id不能为空")
     @NotBlank(message = "用户id不能为空")

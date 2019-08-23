@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import net.sf.oval.constraint.*;
 
+@ApiModel(value = "ListSysUserExportReq")
 @Data
-@ApiModel(value = "查询用户列表")
-public class ListReq implements ParamValidInterface {
+public class ListSysUserExportReq implements ParamValidInterface {
 
     @NotNull(message = "页码不能为空")
     @NotBlank(message = "页码不能为空")

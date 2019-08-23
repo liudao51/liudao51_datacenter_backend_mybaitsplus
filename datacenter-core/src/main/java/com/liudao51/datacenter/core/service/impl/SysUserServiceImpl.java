@@ -29,20 +29,22 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
      * 把Map参数转换为QueryWrapper
      */
     private QueryWrapper<SysUser> getWrapper(Map args) {
+        return this.getWrapper(args, false);
+    }
+
+    private QueryWrapper<SysUser> getWrapper(Map args, Boolean withDelete) {
         QueryWrapper<SysUser> qw = new QueryWrapper<SysUser>();
         //删除标识
-        if (!StringX.isEmpty(args.get("deleted"))) {
-            qw.eq("deleted", StringX.getString(args.get("deleted"), ""));
-        } else {
+        if (!withDelete) {
             qw.eq("deleted", 0);
         }
 
         //其他查询条件
-        if (!StringX.isEmpty(args.get("userName"))) {
-            qw.eq("user_name", StringX.getString(args.get("userName"), ""));
+        if (!StringX.isEmpty(args.get("user_name"))) {
+            qw.eq("user_name", StringX.getString(args.get("user_name"), ""));
         }
-        if (!StringX.isEmpty(args.get("realName"))) {
-            qw.eq("real_name", StringX.getString(args.get("realName"), ""));
+        if (!StringX.isEmpty(args.get("real_name"))) {
+            qw.eq("real_name", StringX.getString(args.get("real_name"), ""));
         }
         if (!StringX.isEmpty(args.get("mobile"))) {
             qw.eq("mobile", StringX.getString(args.get("mobile"), ""));
@@ -82,9 +84,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     }
 
     @SuppressWarnings("unchecked")
-    public Pager<SysUser> selectPage(Map args) {
+    public Pager<SysUser> selectListPage(Map args) {
         QueryWrapper<SysUser> qw = this.getWrapper(args);
-        Page page = new Page<SysUser>(PageUtil.getPageNo(args.get("pageNo")), PageUtil.getPageNo(args.get("pageSize")));
+        Page page = new Page<SysUser>(PageUtil.getPageNo(args.get("page_no")), PageUtil.getPageSize(args.get("page_size")));
 
         return PageUtil.mybatisPageToPager(sysUserDao.page(page, qw));
     }

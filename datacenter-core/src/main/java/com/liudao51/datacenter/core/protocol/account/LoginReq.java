@@ -8,7 +8,7 @@ import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
 
 @Data
-@ApiModel(value = "用户分页查询")
+@ApiModel(value = "LoginReq")
 public class LoginReq implements ParamValidInterface {
 
     @NotNull(message = "用户名不能为空")

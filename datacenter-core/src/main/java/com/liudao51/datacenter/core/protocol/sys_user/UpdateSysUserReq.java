@@ -7,14 +7,9 @@ import lombok.Data;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
 
-/**
- * class:
- * <p>
- * Created by jewel on 2019/8/23.
- */
+@ApiModel(value = "UpdateSysUserReq")
 @Data
-@ApiModel(value = "用户更新")
-public class UpdateReq implements ParamValidInterface {
+public class UpdateSysUserReq implements ParamValidInterface {
 
     @NotNull(message = "用户id不能为空")
     @NotBlank(message = "用户id不能为空")

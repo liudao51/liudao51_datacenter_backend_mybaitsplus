@@ -22,5 +22,5 @@ public interface ISysUserService extends IBaseService {
 
     List<SysUser> selectList(Map args);
 
-    Pager<SysUser> selectPage(Map args);
+    Pager<SysUser> selectListPage(Map args);
 }

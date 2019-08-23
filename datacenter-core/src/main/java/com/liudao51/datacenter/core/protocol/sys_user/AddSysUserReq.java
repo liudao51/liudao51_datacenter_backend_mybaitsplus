@@ -12,9 +12,9 @@ import net.sf.oval.constraint.NotNull;
  * <p>
  * Created by jewel on 2019/8/23.
  */
+@ApiModel(value = "AddSysUserReq")
 @Data
-@ApiModel(value = "用户新增")
-public class AddReq implements ParamValidInterface {
+public class AddSysUserReq implements ParamValidInterface {
 
     @NotNull(message = "用户名不能为空")
     @NotBlank(message = "用户名不能为空")

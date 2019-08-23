@@ -8,6 +8,9 @@ import com.liudao51.datacenter.common.util.StringX;
  * 分页工具类
  */
 public class PageUtil {
+    private static final Long DEFAULT_PAGE_NO = 1L;
+    private static final Long DEFAULT_PAGE_SIZE = 10L;
+
     @SuppressWarnings("unchecked")
     public static Pager mybatisPageToPager(IPage page) {
         return new Pager(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
@@ -19,11 +22,9 @@ public class PageUtil {
         if (!StringX.isEmpty(val)) {
             try {
                 pageNo = Long.valueOf(StringX.getString(val, "1"));
-                if (pageNo < 0) {
-                    pageNo = 1L;
-                }
+                pageNo = (pageNo > 0) ? pageNo : DEFAULT_PAGE_NO;
             } catch (Exception e) {
-                pageNo = 1L;
+                pageNo = DEFAULT_PAGE_NO;
             }
         }
 
@@ -36,11 +37,9 @@ public class PageUtil {
         if (!StringX.isEmpty(val)) {
             try {
                 pageSize = Long.valueOf(StringX.getString(val, "1"));
-                if (pageSize < 0) {
-                    pageSize = 1L;
-                }
+                pageSize = (pageSize > 0) ? pageSize : DEFAULT_PAGE_SIZE;
             } catch (Exception e) {
-                pageSize = 1L;
+                pageSize = DEFAULT_PAGE_SIZE;
             }
         }
 

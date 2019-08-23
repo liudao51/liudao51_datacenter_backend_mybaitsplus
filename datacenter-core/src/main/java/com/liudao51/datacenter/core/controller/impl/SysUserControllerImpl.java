@@ -33,11 +33,11 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
     @Autowired
     private ISysUserService sysUserService;
 
+    @ApiOperation(value = "新增用户")
     @PostMapping("/add")
-    @ApiOperation(value = "用户新增")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody<Pager<SysUser>> add(AddReq req) throws Exception {
+    public ApiResponseBody<Pager<SysUser>> add(AddSysUserReq req) throws Exception {
         Date date = DateX.getDate();
         Long dateTime = date.getTime();
         Long id = date.getTime();
@@ -46,7 +46,10 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         SysUser sysUser = new SysUser();
         sysUser.setId(id);
         sysUser.setUserName(req.getUserName());
+
+        //这里使用用户名作为密码的盐值
         sysUser.setPassword(ShiroUtil.encryptPassword(req.getPassword(), req.getUserName()));
+
         sysUser.setRealName(req.getRealName());
         sysUser.setMobile(req.getMobile());
         sysUser.setEmail(req.getEmail());
@@ -68,11 +71,11 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
+    @ApiOperation(value = "更新用户")
     @PostMapping("/update")
-    @ApiOperation(value = "用户更新")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody<Pager<SysUser>> update(UpdateReq req) throws Exception {
+    public ApiResponseBody<Pager<SysUser>> update(UpdateSysUserReq req) throws Exception {
         Date date = DateX.getDate();
         Long dateTime = date.getTime();
         Long id = req.getId();
@@ -80,8 +83,11 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
 
         SysUser sysUser = new SysUser();
         sysUser.setId(id);
-        sysUser.setUserName(req.getUserName());
 
+        //因为用户名是作为密码的盐值的,所用户名一旦创建则不允许更改
+        //sysUser.setUserName(req.getUserName());
+
+        //如果密码没有填写,则使用之前的密码
         if (!StringX.isEmpty(req.getPassword())) {
             sysUser.setPassword(ShiroUtil.encryptPassword(req.getPassword(), req.getUserName()));
         }
@@ -107,11 +113,11 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
+    @ApiOperation(value = "删除用户")
     @PostMapping("/delete")
-    @ApiOperation(value = "用户删除")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody delete(DeleteReq req) throws Exception {
+    public ApiResponseBody delete(DeleteSysUserReq req) throws Exception {
         SysUser sysUser = new SysUser();
         sysUser.setId(req.getId());
         sysUser.setDeleted(1);
@@ -124,14 +130,14 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
-    @PostMapping("/get")
     @ApiOperation(value = "查询用户对象")
+    @PostMapping("/get")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody<SysUser> get(GetReq req) throws Exception {
+    public ApiResponseBody<SysUser> get(GetSysUserReq req) throws Exception {
         Map args = new HashMap<String, Object>();
-        args.put("userName", req.getUserName());
-        args.put("realName", req.getRealName());
+        args.put("user_name", req.getUserName());
+        args.put("real_name", req.getRealName());
         args.put("mobile", req.getMobile());
         args.put("email", req.getEmail());
         SysUser sysUser = sysUserService.selectOne(args);
@@ -139,44 +145,44 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse<SysUser>().success(sysUser);
     }
 
-    @PostMapping("/list")
     @ApiOperation(value = "查询用户列表")
+    @PostMapping("/list")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody<Pager<SysUser>> list(ListReq req) throws Exception {
+    public ApiResponseBody<Pager<SysUser>> list(ListSysUserReq req) throws Exception {
         Map args = new HashMap<String, Object>();
-        args.put("pageNo", req.getPageNo());
-        args.put("pageSize", req.getPageSize());
-        args.put("userName", req.getUserName());
-        args.put("realName", req.getRealName());
+        args.put("page_no", req.getPageNo());
+        args.put("page_size", req.getPageSize());
+        args.put("user_name", req.getUserName());
+        args.put("real_name", req.getRealName());
         args.put("mobile", req.getMobile());
         args.put("email", req.getEmail());
-        Pager<SysUser> sysUserList = sysUserService.selectPage(args);
+        Pager<SysUser> sysUserList = sysUserService.selectListPage(args);
 
         return new ApiResponse<Pager<SysUser>>().success(sysUserList);
     }
 
-    @PostMapping("/list/export")
     @ApiOperation(value = "查询用户列表-导出")
+    @PostMapping("/list/export")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody listExport(ListReq req) throws Exception {
+    public ApiResponseBody listExport(ListSysUserReq req) throws Exception {
 
         return new ApiResponse<Pager<SysUser>>().success();
     }
 
-    @PostMapping("/list/filter")
     @ApiOperation(value = "查询用户列表-下拉菜单")
+    @PostMapping("/list/filter")
     @RequestParamValid
     @SuppressWarnings("unchecked")
-    public ApiResponseBody<Pager<SysUser>> listFilter(ListFilterReq req) throws Exception {
+    public ApiResponseBody<Pager<SysUser>> listFilter(ListSysUserFilterReq req) throws Exception {
         Map args = new HashMap<String, Object>();
-        args.put("pageNo", req.getPageNo());
-        args.put("pageSize", req.getPageSize());
-        args.put("userName", req.getUserName());
-        args.put("realName", req.getRealName());
+        args.put("page_no", req.getPageNo());
+        args.put("page_size", req.getPageSize());
+        args.put("user_name", req.getUserName());
+        args.put("real_name", req.getRealName());
         args.put("email", req.getEmail());
-        Pager<SysUser> sysUserListPage = sysUserService.selectPage(args);
+        Pager<SysUser> sysUserListPage = sysUserService.selectListPage(args);
 
         return new ApiResponse<Pager<SysUser>>().success(sysUserListPage);
     }

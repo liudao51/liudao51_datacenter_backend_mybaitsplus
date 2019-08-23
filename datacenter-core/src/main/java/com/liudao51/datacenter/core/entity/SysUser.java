@@ -16,15 +16,15 @@ import java.io.Serializable;
  * 用户实体
  */
 
-@ApiModel("用户对象")
-@TableName("dc_sys_user")
+@ApiModel("SysUser")
 @Data
+@ToString
+@TableName("dc_sys_user")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ToString
 public class SysUser extends Model<SysUser> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -68361028834925356L;
 
     /**
      * id
