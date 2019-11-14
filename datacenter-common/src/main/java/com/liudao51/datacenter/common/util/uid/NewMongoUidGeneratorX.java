@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.liudao51.datacenter.core.util;
+package com.liudao51.datacenter.common.util.uid;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 5dbbd598 8dd521 6733 04ca5c
  * 5dbbd5a7 5350a9 3c97 3a1692
  */
-public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGeneratorUtil>, Serializable {
+public final class NewMongoUidGeneratorX implements Comparable<NewMongoUidGeneratorX>, Serializable {
 
     private static final long serialVersionUID = 3670079982654483072L;
 
@@ -63,8 +63,8 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      *
      * @return the new id
      */
-    public static NewMongoUidGeneratorUtil get() {
-        return new NewMongoUidGeneratorUtil();
+    public static NewMongoUidGeneratorX get() {
+        return new NewMongoUidGeneratorX();
     }
 
     /**
@@ -105,7 +105,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
     /**
      * Create a new object id.
      */
-    public NewMongoUidGeneratorUtil() {
+    public NewMongoUidGeneratorX() {
         this(new Date());
     }
 
@@ -114,7 +114,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      *
      * @param date the date
      */
-    public NewMongoUidGeneratorUtil(final Date date) {
+    public NewMongoUidGeneratorX(final Date date) {
         this(dateToTimestampSeconds(date), NEXT_COUNTER.getAndIncrement() & LOW_ORDER_THREE_BYTES, false);
     }
 
@@ -125,7 +125,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param counter the counter
      * @throws IllegalArgumentException if the high order byte of counter is not zero
      */
-    public NewMongoUidGeneratorUtil(final Date date, final int counter) {
+    public NewMongoUidGeneratorX(final Date date, final int counter) {
         this(dateToTimestampSeconds(date), counter, true);
     }
 
@@ -137,10 +137,10 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param processIdentifier the process identifier
      * @param counter           the counter
      * @throws IllegalArgumentException if the high order byte of machineIdentifier or counter is not zero
-     * @deprecated Use {@link #NewMongoUidGeneratorUtil(Date, int)} instead
+     * @deprecated Use {@link #NewMongoUidGeneratorX(Date, int)} instead
      */
     @Deprecated
-    public NewMongoUidGeneratorUtil(final Date date, final int machineIdentifier, final short processIdentifier, final int counter) {
+    public NewMongoUidGeneratorX(final Date date, final int machineIdentifier, final short processIdentifier, final int counter) {
         this(dateToTimestampSeconds(date), machineIdentifier, processIdentifier, counter);
     }
 
@@ -152,10 +152,10 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param processIdentifier the process identifier
      * @param counter           the counter
      * @throws IllegalArgumentException if the high order byte of machineIdentifier or counter is not zero
-     * @deprecated Use {@link #NewMongoUidGeneratorUtil(int, int)} instead
+     * @deprecated Use {@link #NewMongoUidGeneratorX(int, int)} instead
      */
     @Deprecated
-    public NewMongoUidGeneratorUtil(final int timestamp, final int machineIdentifier, final short processIdentifier, final int counter) {
+    public NewMongoUidGeneratorX(final int timestamp, final int machineIdentifier, final short processIdentifier, final int counter) {
         this(timestamp, machineIdentifier, processIdentifier, counter, true);
     }
 
@@ -166,16 +166,16 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param counter   the counter
      * @throws IllegalArgumentException if the high order byte of counter is not zero
      */
-    public NewMongoUidGeneratorUtil(final int timestamp, final int counter) {
+    public NewMongoUidGeneratorX(final int timestamp, final int counter) {
         this(timestamp, counter, true);
     }
 
-    private NewMongoUidGeneratorUtil(final int timestamp, final int counter, final boolean checkCounter) {
+    private NewMongoUidGeneratorX(final int timestamp, final int counter, final boolean checkCounter) {
         this(timestamp, RANDOM_VALUE1, RANDOM_VALUE2, counter, checkCounter);
     }
 
-    private NewMongoUidGeneratorUtil(final int timestamp, final int randomValue1, final short randomValue2, final int counter,
-                                     final boolean checkCounter) {
+    private NewMongoUidGeneratorX(final int timestamp, final int randomValue1, final short randomValue2, final int counter,
+                                  final boolean checkCounter) {
         if ((randomValue1 & 0xff000000) != 0) {
             throw new IllegalArgumentException("The machine identifier must be between 0 and 16777215 (it must fit in three bytes).");
         }
@@ -194,7 +194,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param hexString the string to convert
      * @throws IllegalArgumentException if the string is not a valid hex string representation of an ObjectId
      */
-    public NewMongoUidGeneratorUtil(final String hexString) {
+    public NewMongoUidGeneratorX(final String hexString) {
         this(parseHexString(hexString));
     }
 
@@ -204,7 +204,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param bytes the byte array
      * @throws IllegalArgumentException if array is null or not of length 12
      */
-    public NewMongoUidGeneratorUtil(final byte[] bytes) {
+    public NewMongoUidGeneratorX(final byte[] bytes) {
         this(ByteBuffer.wrap(bytes));
     }
 
@@ -215,7 +215,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param machineAndProcessIdentifier machine and process identifier
      * @param counter                     incremental value
      */
-    NewMongoUidGeneratorUtil(final int timestamp, final int machineAndProcessIdentifier, final int counter) {
+    NewMongoUidGeneratorX(final int timestamp, final int machineAndProcessIdentifier, final int counter) {
         this(legacyToBytes(timestamp, machineAndProcessIdentifier, counter));
     }
 
@@ -226,7 +226,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @throws IllegalArgumentException if the buffer is null or does not have at least 12 bytes remaining
      * @since 3.4
      */
-    public NewMongoUidGeneratorUtil(final ByteBuffer buffer) {
+    public NewMongoUidGeneratorX(final ByteBuffer buffer) {
         if (buffer == null) {
             throw new IllegalArgumentException("buffer can not be null");
         }
@@ -342,7 +342,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
             return false;
         }
 
-        NewMongoUidGeneratorUtil objectId = (NewMongoUidGeneratorUtil) o;
+        NewMongoUidGeneratorX objectId = (NewMongoUidGeneratorX) o;
 
         if (counter != objectId.counter) {
             return false;
@@ -372,7 +372,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
     }
 
     @Override
-    public int compareTo(final NewMongoUidGeneratorUtil other) {
+    public int compareTo(final NewMongoUidGeneratorX other) {
         if (other == null) {
             throw new NullPointerException();
         }
@@ -410,11 +410,11 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
      * @param inc     incremental value
      * @return a new {@code ObjectId} created from the given values
      * @since 2.12.0
-     * @deprecated Use {@link #NewMongoUidGeneratorUtil(int, int)} instead
+     * @deprecated Use {@link #NewMongoUidGeneratorX(int, int)} instead
      */
     @Deprecated
-    public static NewMongoUidGeneratorUtil createFromLegacyFormat(final int time, final int machine, final int inc) {
-        return new NewMongoUidGeneratorUtil(time, machine, inc);
+    public static NewMongoUidGeneratorX createFromLegacyFormat(final int time, final int machine, final int inc) {
+        return new NewMongoUidGeneratorX(time, machine, inc);
     }
 
     /**
@@ -507,7 +507,7 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
 
     /**
      * @return a string representation of the ObjectId in hexadecimal format
-     * @see NewMongoUidGeneratorUtil#toHexString()
+     * @see NewMongoUidGeneratorX#toHexString()
      * @deprecated use {@link #toHexString()}
      */
     @Deprecated
@@ -583,9 +583,9 @@ public final class NewMongoUidGeneratorUtil implements Comparable<NewMongoUidGen
     }
 
     public static void main(String[] args) {
-        System.out.println(new NewMongoUidGeneratorUtil().toHexString());
-        System.out.println(new NewMongoUidGeneratorUtil().toHexString());
-        System.out.println(new NewMongoUidGeneratorUtil().toHexString());
+        System.out.println(new NewMongoUidGeneratorX().toHexString());
+        System.out.println(new NewMongoUidGeneratorX().toHexString());
+        System.out.println(new NewMongoUidGeneratorX().toHexString());
     }
 
 }

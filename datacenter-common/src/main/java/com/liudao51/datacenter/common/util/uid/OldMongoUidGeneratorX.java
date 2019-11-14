@@ -1,4 +1,4 @@
-package com.liudao51.datacenter.core.util;
+package com.liudao51.datacenter.common.util.uid;
 
 import com.google.common.base.Objects;
 
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * 5dbbd4c3 d2c335 d03a c768fd
  * 5dbbd555 d2c3b5 315c 045c13
  */
-public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGeneratorUtil>, java.io.Serializable {
+public class OldMongoUidGeneratorX implements Comparable<OldMongoUidGeneratorX>, java.io.Serializable {
 
     private final int _time;
     private final int _machine;
@@ -40,7 +40,7 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
     /**
      * Create a new object id.
      */
-    public OldMongoUidGeneratorUtil() {
+    public OldMongoUidGeneratorX() {
         _time = (int) (System.currentTimeMillis() / 1000);
         _machine = _genmachine;
         _inc = _nextInc.getAndIncrement();
@@ -56,8 +56,8 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
      *
      * @return the new id
      */
-    public static OldMongoUidGeneratorUtil get() {
-        return new OldMongoUidGeneratorUtil();
+    public static OldMongoUidGeneratorX get() {
+        return new OldMongoUidGeneratorX();
     }
 
     /**
@@ -132,7 +132,7 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
         return (int) diff;
     }
 
-    public int compareTo(OldMongoUidGeneratorUtil id) {
+    public int compareTo(OldMongoUidGeneratorX id) {
         if (id == null)
             return -1;
 
@@ -208,7 +208,7 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
                 } catch (Throwable t) {
                 }
 
-                ClassLoader loader = OldMongoUidGeneratorUtil.class.getClassLoader();
+                ClassLoader loader = OldMongoUidGeneratorX.class.getClassLoader();
                 int loaderId = loader != null ? System.identityHashCode(loader) : 0;
 
                 StringBuilder sb = new StringBuilder();
@@ -231,7 +231,7 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OldMongoUidGeneratorUtil that = (OldMongoUidGeneratorUtil) o;
+        OldMongoUidGeneratorX that = (OldMongoUidGeneratorX) o;
 
         return Objects.equal(this.serialVersionUID, that.serialVersionUID) &&
                 Objects.equal(this.LOGGER, that.LOGGER) &&
@@ -250,8 +250,8 @@ public class OldMongoUidGeneratorUtil implements Comparable<OldMongoUidGenerator
     }
 
     public static void main(String[] args) {
-        System.out.println(new OldMongoUidGeneratorUtil().toHexString());
-        System.out.println(new OldMongoUidGeneratorUtil().toHexString());
-        System.out.println(new OldMongoUidGeneratorUtil().toHexString());
+        System.out.println(new OldMongoUidGeneratorX().toHexString());
+        System.out.println(new OldMongoUidGeneratorX().toHexString());
+        System.out.println(new OldMongoUidGeneratorX().toHexString());
     }
 }

@@ -46,7 +46,8 @@ public enum ErrorCode {
 
     STREAM_FILE_FORMAT_ERROR(23001, "文件格式错误"),
 
-    UNDEFINED(-1, "未定义"), SUCCESS(0, "success");
+    UNDEFINED(-1, "未定义"),
+    SUCCESS(0, "success");
 
     private final Integer code;
     private final String value;

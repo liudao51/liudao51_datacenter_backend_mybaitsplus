@@ -13,6 +13,7 @@ import com.liudao51.datacenter.core.response.ApiResponse;
 import com.liudao51.datacenter.core.response.ApiResponseBody;
 import com.liudao51.datacenter.core.service.ISysUserService;
 import com.liudao51.datacenter.core.util.ShiroUtil;
+import com.liudao51.datacenter.core.util.UidUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -33,23 +34,20 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
     @Autowired
     private ISysUserService sysUserService;
 
-    @ApiOperation(value = "新增用户")
+    @ApiOperation(value = "用户新增")
     @PostMapping("/add")
     @RequestParamValid
     @SuppressWarnings("unchecked")
     public ApiResponseBody<Pager<SysUser>> add(AddSysUserReq req) throws Exception {
         Date date = DateX.getDate();
         Long dateTime = date.getTime();
-        Long id = date.getTime();
         String handler = "admin";
+        Long id = UidUtil.getUid();
 
         SysUser sysUser = new SysUser();
         sysUser.setId(id);
         sysUser.setUserName(req.getUserName());
-
-        //这里使用用户名作为密码的盐值
-        sysUser.setPassword(ShiroUtil.encryptPassword(req.getPassword(), req.getUserName()));
-
+        sysUser.setPassword(ShiroUtil.encryptPassword(req.getPassword(), req.getUserName())); //这里使用用户名作为密码的盐值
         sysUser.setRealName(req.getRealName());
         sysUser.setMobile(req.getMobile());
         sysUser.setEmail(req.getEmail());
@@ -62,6 +60,7 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         sysUser.setUpdatedBy(handler);
         sysUser.setUpdatedTime(dateTime);
         sysUser.setDeleted(0);
+
         Boolean isSucceed = sysUserService.add(sysUser);
 
         if (!isSucceed) {
@@ -71,7 +70,7 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
-    @ApiOperation(value = "更新用户")
+    @ApiOperation(value = "用户更新")
     @PostMapping("/update")
     @RequestParamValid
     @SuppressWarnings("unchecked")
@@ -97,13 +96,13 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         sysUser.setEmail(req.getEmail());
         sysUser.setDepartmentId(req.getDepartmentId());
         sysUser.setDepartmentName(req.getDepartmentName());
-        sysUser.setStatus(1);
         sysUser.setRemark(req.getRemark());
         sysUser.setCreatedBy(handler);
         sysUser.setCreatedTime(dateTime);
         sysUser.setUpdatedBy(handler);
         sysUser.setUpdatedTime(dateTime);
         sysUser.setDeleted(0);
+
         Boolean isSucceed = sysUserService.update(sysUser);
 
         if (!isSucceed) {
@@ -113,7 +112,7 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
-    @ApiOperation(value = "删除用户")
+    @ApiOperation(value = "用户删除")
     @PostMapping("/delete")
     @RequestParamValid
     @SuppressWarnings("unchecked")
@@ -130,7 +129,7 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         return new ApiResponse().success();
     }
 
-    @ApiOperation(value = "查询用户对象")
+    @ApiOperation(value = "用户对象查询")
     @PostMapping("/get")
     @RequestParamValid
     @SuppressWarnings("unchecked")
@@ -140,12 +139,13 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         args.put("real_name", req.getRealName());
         args.put("mobile", req.getMobile());
         args.put("email", req.getEmail());
+
         SysUser sysUser = sysUserService.selectOne(args);
 
         return new ApiResponse<SysUser>().success(sysUser);
     }
 
-    @ApiOperation(value = "查询用户列表")
+    @ApiOperation(value = "用户列表查询")
     @PostMapping("/list")
     @RequestParamValid
     @SuppressWarnings("unchecked")
@@ -157,21 +157,21 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         args.put("real_name", req.getRealName());
         args.put("mobile", req.getMobile());
         args.put("email", req.getEmail());
+
         Pager<SysUser> sysUserList = sysUserService.selectListPage(args);
 
         return new ApiResponse<Pager<SysUser>>().success(sysUserList);
     }
 
-    @ApiOperation(value = "查询用户列表-导出")
+    @ApiOperation(value = "用户列表查询-导出")
     @PostMapping("/list/export")
     @RequestParamValid
     @SuppressWarnings("unchecked")
     public ApiResponseBody listExport(ListSysUserReq req) throws Exception {
-
         return new ApiResponse<Pager<SysUser>>().success();
     }
 
-    @ApiOperation(value = "查询用户列表-下拉菜单")
+    @ApiOperation(value = "用户列表查询-下拉菜单")
     @PostMapping("/list/filter")
     @RequestParamValid
     @SuppressWarnings("unchecked")
@@ -182,6 +182,7 @@ public class SysUserControllerImpl extends BaseControllerImpl implements ISysUse
         args.put("user_name", req.getUserName());
         args.put("real_name", req.getRealName());
         args.put("email", req.getEmail());
+
         Pager<SysUser> sysUserListPage = sysUserService.selectListPage(args);
 
         return new ApiResponse<Pager<SysUser>>().success(sysUserListPage);
